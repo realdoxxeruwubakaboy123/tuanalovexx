@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vantixt + tuana</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+
+body{
+  background:black;
+  color:white;
+  overflow:hidden;
+}
+
+
+#bg-video{
+  position:fixed;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(0.85);
+  z-index:-1;
+}
+
+
+.logo{
+  position:fixed;
+  top:20px;
+  right:20px;
+  color:#ff6b81;
+  text-decoration:none;
+  font-size:0.95rem;
+  opacity:0.7;
+}
+.logo:hover{
+  opacity:1;
+  text-shadow:0 0 15px #ff6b81;
+}
+
+
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  background:black;
+  z-index:1000;
+  cursor:pointer;
+  text-align:center;
+}
+
+#intro h1,#intro h2{
+  font-size:2.5rem;
+  color:#ff6b81;
+  opacity:0;
+}
+
+#intro h1{ animation:fadeIn 1.5s forwards; }
+#intro h2{
+  transform:translateY(30px);
+  animation:secondText 1.5s forwards;
+  animation-delay:1.5s;
+}
+
+@keyframes fadeIn{ to{opacity:1;} }
+
+@keyframes secondText{
+  to{
+    opacity:1;
+    transform:translateY(0);
+    text-shadow:0 0 40px #ff6b81;
+  }
+}
+
+
+#main{
+  opacity:0;
+  pointer-events:none;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transition:1s;
+}
+
+
+.title{
+  font-size:2.2rem;
+  margin-bottom:40px;
+  letter-spacing:5px;
+  color:#ff6b81;
+  text-shadow:
+    0 0 5px #ff6b81,
+    0 0 15px #ff6b81,
+    0 0 30px #ff6b81;
+}
+
+
+.cards{
+  display:flex;
+  gap:60px;
+}
+
+.card{
+  width:240px;
+  height:320px;
+  border-radius:20px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  transition:0.4s;
+}
+
+.card:hover{
+  transform:translateY(-8px) scale(1.04);
+}
+
+
+.ribbon{
+  position:absolute;
+  top:8px;
+  font-size:1.3rem;
+  color:#ff6b81;
+}
+.ribbon.left{ left:10px; }
+.ribbon.right{ right:10px; }
+
+
+.pfp{
+  width:120px;
+  height:120px;
+  border-radius:16px;
+  object-fit:cover;
+  margin-bottom:12px;
+}
+
+
+.name{
+  font-size:1.1rem;
+}
+
+
+.overlay{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:12px;
+  background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  text-align:center;
+  opacity:0;
+  transition:.3s;
+}
+.card:hover .overlay{ opacity:1; }
+
+
+.particle{
+  position:absolute;
+  font-size:9px;
+  color:#ff9aaa;
+  animation:floatUp linear forwards;
+}
+@keyframes floatUp{
+  0%{opacity:0; transform:translateY(0);}
+  20%{opacity:1;}
+  100%{opacity:0; transform:translateY(-50px);}
+}
+
+
+.heart{
+  position:fixed;
+  top:-10px;
+  font-size:14px;
+  color:#ff6b81;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh); opacity:0;}
+}
+
+/* VIEWS (JETZT LINKS) */
+#views{
+  position:fixed;
+  bottom:15px;
+  left:15px;
+  font-size:0.8rem;
+  color:#ff9aaa;
+  opacity:0.8;
+}
+
+
+@media (max-width: 768px){
+
+  .cards{
+    flex-direction:column;
+    gap:30px;
+  }
+
+  .card{
+    width:200px;
+    height:280px;
+  }
+
+  .title{
+    font-size:1.6rem;
+    margin-bottom:30px;
+  }
+
+  #intro h1,#intro h2{
+    font-size:1.8rem;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<a class="logo" href="https://deadeye.cc/" target="_blank">deadeye.cc</a>
+
+<video id="bg-video" autoplay muted loop>
+  <source src="https://files.catbox.moe/qutaht.mp4">
+</video>
+
+<audio id="music" loop preload="auto">
+  <source src="https://files.catbox.moe/g4qt6d.mp3">
+</audio>
+
+<div id="intro">
+  <h1>i love you..</h1>
+  <h2>tuana</h2>
+</div>
+
+<div id="main">
+  <div class="title">𝚌 + 𝚝</div>
+
+  <div class="cards">
+    <div class="card" id="card1">
+      <div class="ribbon left">𝜗ৎ</div>
+      <img class="pfp" src="https://files.catbox.moe/9xmpst.jpg">
+      <div class="name">vantixt</div>
+      <div class="overlay">i love you tuana</div>
+    </div>
+
+    <div class="card" id="card2">
+      <div class="ribbon right">𝜗ৎ</div>
+      <img class="pfp" src="https://files.catbox.moe/97fa6a.jpg">
+      <div class="name">tuana</div>
+      <div class="overlay">i love you vantixt</div>
+    </div>
+  </div>
+</div>
+
+<div id="views">👁 <span id="viewCount">0</span></div>
+
+<script>
+const intro = document.getElementById("intro");
+const main = document.getElementById("main");
+const music = document.getElementById("music");
+
+intro.addEventListener("click", () => {
+  intro.style.opacity = "0";
+  setTimeout(()=>{
+    intro.style.display="none";
+    main.style.opacity="1";
+    main.style.pointerEvents="auto";
+  },800);
+  music.play();
+}, { once: true });
+
+
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(4+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},350);
+
+
+function p(c){
+  const el=document.createElement("div");
+  el.className="particle";
+  el.innerText="꣑ৎ";
+  el.style.left=Math.random()*100+"%";
+  el.style.bottom="20px";
+  el.style.animationDuration=(2+Math.random()*2)+"s";
+  c.appendChild(el);
+  setTimeout(()=>el.remove(),3000);
+}
+setInterval(()=>{
+  p(card1);p(card2);
+},300);
+
+
+let base=2463;
+let first=localStorage.getItem("firstVisit");
+if(!first){
+  first=Date.now();
+  localStorage.setItem("firstVisit",first);
+}
+let days=Math.floor((Date.now()-first)/(1000*60*60*24));
+let auto=days*15;
+if(!localStorage.getItem("visited")){
+  base++;
+  localStorage.setItem("visited","true");
+}
+viewCount.innerText=base+auto;
+</script>
+
+</body>
+</html>
