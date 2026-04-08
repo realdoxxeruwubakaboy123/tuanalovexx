@@ -14,7 +14,6 @@ body{
   overflow:hidden;
 }
 
-
 #bg-video{
   position:fixed;
   width:100%;
@@ -23,7 +22,6 @@ body{
   filter:brightness(0.85);
   z-index:-1;
 }
-
 
 .logo{
   position:fixed;
@@ -38,7 +36,6 @@ body{
   opacity:1;
   text-shadow:0 0 15px #ff6b81;
 }
-
 
 #intro{
   position:fixed;
@@ -77,7 +74,6 @@ body{
   }
 }
 
-
 #main{
   opacity:0;
   pointer-events:none;
@@ -89,7 +85,6 @@ body{
   transition:1s;
 }
 
-
 .title{
   font-size:2.2rem;
   margin-bottom:40px;
@@ -100,7 +95,6 @@ body{
     0 0 15px #ff6b81,
     0 0 30px #ff6b81;
 }
-
 
 .cards{
   display:flex;
@@ -126,7 +120,6 @@ body{
   transform:translateY(-8px) scale(1.04);
 }
 
-
 .ribbon{
   position:absolute;
   top:8px;
@@ -136,7 +129,6 @@ body{
 .ribbon.left{ left:10px; }
 .ribbon.right{ right:10px; }
 
-
 .pfp{
   width:120px;
   height:120px;
@@ -145,11 +137,9 @@ body{
   margin-bottom:12px;
 }
 
-
 .name{
   font-size:1.1rem;
 }
-
 
 .overlay{
   position:absolute;
@@ -163,7 +153,6 @@ body{
 }
 .card:hover .overlay{ opacity:1; }
 
-
 .particle{
   position:absolute;
   font-size:9px;
@@ -176,7 +165,6 @@ body{
   100%{opacity:0; transform:translateY(-50px);}
 }
 
-
 .heart{
   position:fixed;
   top:-10px;
@@ -188,7 +176,47 @@ body{
   to{transform:translateY(110vh); opacity:0;}
 }
 
-/* VIEWS (JETZT LINKS) */
+/* LOVE TEXT (größer + länger sichtbar) */
+#loveText{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%) scale(0.8);
+  font-size:3.5rem;
+  color:#ff6b81;
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  text-shadow:
+    0 0 15px #ff6b81,
+    0 0 40px #ff6b81,
+    0 0 80px #ff6b81;
+}
+
+.showLove{
+  animation:loveAnim 4.5s ease forwards;
+}
+
+@keyframes loveAnim{
+  0%{
+    opacity:0;
+    transform:translate(-50%, -40%) scale(0.5);
+  }
+  25%{
+    opacity:1;
+    transform:translate(-50%, -50%) scale(1.2);
+  }
+  70%{
+    opacity:1;
+    transform:translate(-50%, -52%) scale(1.05);
+  }
+  100%{
+    opacity:0;
+    transform:translate(-50%, -65%) scale(1);
+  }
+}
+
+/* VIEWS */
 #views{
   position:fixed;
   bottom:15px;
@@ -198,28 +226,22 @@ body{
   opacity:0.8;
 }
 
-
 @media (max-width: 768px){
-
   .cards{
     flex-direction:column;
     gap:30px;
   }
-
   .card{
     width:200px;
     height:280px;
   }
-
   .title{
     font-size:1.6rem;
     margin-bottom:30px;
   }
-
   #intro h1,#intro h2{
     font-size:1.8rem;
   }
-
 }
 </style>
 </head>
@@ -249,17 +271,19 @@ body{
       <div class="ribbon left">𝜗ৎ</div>
       <img class="pfp" src="https://files.catbox.moe/9xmpst.jpg">
       <div class="name">vantixt</div>
-      <div class="overlay">i love you tuana</div>
+      <div class="overlay">i love tuana</div>
     </div>
 
     <div class="card" id="card2">
       <div class="ribbon right">𝜗ৎ</div>
       <img class="pfp" src="https://files.catbox.moe/97fa6a.jpg">
       <div class="name">tuana</div>
-      <div class="overlay">i love you vantixt</div>
+      <div class="overlay">i love vantixt</div>
     </div>
   </div>
 </div>
+
+<div id="loveText">i love you tuana so much baby</div>
 
 <div id="views">👁 <span id="viewCount">0</span></div>
 
@@ -267,6 +291,7 @@ body{
 const intro = document.getElementById("intro");
 const main = document.getElementById("main");
 const music = document.getElementById("music");
+const loveText = document.getElementById("loveText");
 
 intro.addEventListener("click", () => {
   intro.style.opacity = "0";
@@ -276,8 +301,12 @@ intro.addEventListener("click", () => {
     main.style.pointerEvents="auto";
   },800);
   music.play();
-}, { once: true });
 
+  setTimeout(()=>{
+    loveText.classList.add("showLove");
+  },3000);
+
+}, { once: true });
 
 setInterval(()=>{
   const h=document.createElement("div");
@@ -288,7 +317,6 @@ setInterval(()=>{
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),7000);
 },350);
-
 
 function p(c){
   const el=document.createElement("div");
@@ -303,7 +331,6 @@ function p(c){
 setInterval(()=>{
   p(card1);p(card2);
 },300);
-
 
 let base=2463;
 let first=localStorage.getItem("firstVisit");
