@@ -63,7 +63,7 @@
     
     .grid{
       display:grid;
-      grid-template-columns:repeat(7, 170px);
+      grid-template-columns:repeat(8, 170px);
       grid-auto-rows: 300px;
       justify-content:center;
       justify-items:center;
@@ -295,9 +295,9 @@
 
       <div class="card">
         <div class="card-content">
-          <img class="pfp" src="sora.jpg" alt="sora">
-          <div class="username">sora</div>
-          <a class="discord-btn" target="_blank" href="https://discord.com/users/1481081220921032811">
+          <img class="pfp" src="vantixt.jpg" alt="vantixt">
+          <div class="username">vantixt</div>
+          <a class="discord-btn" target="_blank" href="https://discord.com/users/1273942986404921376">
             <img src="https://files.catbox.moe/clka2s.webp" alt="Discord">
           </a>
         </div>
@@ -345,9 +345,9 @@
 
       <div class="card">
         <div class="card-content">
-          <img class="pfp" src="vantixt.jpg" alt="vantixt">
-          <div class="username">vantixt</div>
-          <a class="discord-btn" target="_blank" href="https://discord.com/users/1273942986404921376">
+          <img class="pfp" src="sora.jpg" alt="sora">
+          <div class="username">sora</div>
+          <a class="discord-btn" target="_blank" href="https://discord.com/users/1481081220921032811">
             <img src="https://files.catbox.moe/clka2s.webp" alt="Discord">
           </a>
         </div>
@@ -385,9 +385,29 @@
 
       <div class="card">
         <div class="card-content">
-          <img class="pfp" src="israfil.jpg" alt="israfil">
-          <div class="username">israfil</div>
+          <img class="pfp" src="israfil.png" alt="israfil">
+          <div class="username">Israfil</div>
           <a class="discord-btn" target="_blank" href="https://discord.com/users/501062121556017153">
+            <img src="https://files.catbox.moe/clka2s.webp" alt="Discord">
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <img class="pfp" src="pasa.png" alt="pasa">
+          <div class="username">109</div>
+          <a class="discord-btn" target="_blank" href="https://discord.com/users/1449042120626143294">
+            <img src="https://files.catbox.moe/clka2s.webp" alt="Discord">
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <img class="pfp" src="quisy.png" alt="quisy">
+          <div class="username">quisy</div>
+          <a class="discord-btn" target="_blank" href="https://discord.com/users/972000445805494283">
             <img src="https://files.catbox.moe/clka2s.webp" alt="Discord">
           </a>
         </div>
@@ -400,7 +420,7 @@
       <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
     </svg>
-    <span id="views-count">653</span>
+    <span id="views-count">3294</span>
   </div>
 
   <canvas id="cursor-canvas"></canvas>
@@ -515,10 +535,11 @@
         (function(){
           const COUNT_KEY = 'views_count_v1';
           const TIME_KEY = 'views_time_v1';
-          const START = 653;
+          const START = 3294;
           const PERIOD = 3 * 60 * 60 * 1000; // 3 hours
           const now = Date.now();
-          let count = parseInt(localStorage.getItem(COUNT_KEY) || START, 10);
+          const storedCount = parseInt(localStorage.getItem(COUNT_KEY), 10);
+          let count = Number.isNaN(storedCount) ? START : Math.max(storedCount, START);
           let last = parseInt(localStorage.getItem(TIME_KEY) || now, 10);
 
           // apply missed increments since last
