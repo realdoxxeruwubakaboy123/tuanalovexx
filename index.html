@@ -142,6 +142,186 @@
       letter-spacing:2px;
     }
 
+    @media (max-width: 900px){
+
+      body{
+        overflow-y:auto;
+        overflow-x:hidden;
+        background:#050505;
+        color:white;
+      }
+
+      #bg-video{
+        display:block;
+        filter:brightness(.25) blur(3px);
+      }
+
+      #main{
+        position:relative;
+        height:auto;
+        min-height:100vh;
+        overflow:visible;
+        padding:90px 15px 30px;
+        display:block;
+      }
+
+      .grid{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:25px;
+        width:100%;
+        padding:0;
+      }
+
+      .card{
+        width:100%;
+        max-width:420px;
+        min-width:unset;
+        height:auto;
+        padding:22px;
+        border-radius:32px;
+        background:
+          linear-gradient(
+            145deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.03)
+          );
+        backdrop-filter:blur(20px);
+        border:1px solid rgba(255,255,255,.08);
+        box-shadow:
+          0 10px 40px rgba(0,0,0,.6),
+          0 0 50px rgba(255,255,255,.05);
+        transform:none;
+      }
+
+      .card:active{
+        transform:scale(.98);
+      }
+
+      .card-content{
+        gap:18px;
+      }
+
+      .pfp{
+        width:140px;
+        height:140px;
+        border-radius:28px;
+        box-shadow:
+          0 0 35px rgba(255,255,255,.15),
+          0 0 80px rgba(255,255,255,.08);
+      }
+
+      .username{
+        font-size:1.6rem;
+        font-weight:700;
+        letter-spacing:1px;
+      }
+
+      .discord-btn{
+        margin-top:10px;
+        width:85px;
+      }
+
+      .discord-btn img{
+        border-radius:20px;
+      }
+
+      .volume-control{
+        top:15px;
+        right:15px;
+        background:rgba(0,0,0,.6);
+        backdrop-filter:blur(20px);
+        border:1px solid rgba(255,255,255,.08);
+      }
+
+      .views-counter{
+        left:15px;
+        bottom:15px;
+        background:rgba(0,0,0,.6);
+        backdrop-filter:blur(20px);
+        border:1px solid rgba(255,255,255,.08);
+      }
+
+      .mobile-hint{
+        bottom:75px;
+        background:rgba(0,0,0,.75);
+        color:white;
+        border:1px solid rgba(255,255,255,.08);
+      }
+
+      .card::before{
+        opacity:.15;
+        animation:spin 10s linear infinite;
+      }
+
+      .card::after{
+        background:rgba(0,0,0,.75);
+      }
+
+      .card{
+        animation:floatCard 4s ease-in-out infinite;
+      }
+
+      .pfp{
+        animation:glowPfp 3s infinite alternate;
+      }
+    }
+
+    @keyframes floatCard{
+      0%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-8px);
+      }
+      100%{
+        transform:translateY(0px);
+      }
+    }
+
+    @keyframes glowPfp{
+      from{
+        box-shadow:
+          0 0 20px rgba(255,255,255,.10);
+      }
+      to{
+        box-shadow:
+          0 0 50px rgba(255,255,255,.35),
+          0 0 100px rgba(255,255,255,.15);
+      }
+    }
+
+    @media (max-width: 500px) {
+      #intro h1 {
+        font-size:2rem;
+      }
+
+      .card {
+        min-width:90vw;
+        width:90vw;
+        max-width:90vw;
+        height:auto;
+      }
+
+      .volume-control {
+        top:8px;
+        right:8px;
+        padding:6px 8px;
+      }
+
+      .views-counter {
+        left:8px;
+        bottom:8px;
+        padding:6px 8px;
+        font-size:12px;
+      }
+
+      .discord-btn {
+        width:64px;
+      }
+    }
+
     
     .discord-btn{
       display:block;
@@ -423,12 +603,27 @@
     <span id="views-count">3294</span>
   </div>
 
+  <div class="mobile-hint" id="mobile-hint" style="display:none;">Tippe und wische nach links/rechts</div>
+
   <canvas id="cursor-canvas"></canvas>
 
   <script>
     const intro=document.getElementById("intro");
     const main=document.getElementById("main");
     const music=document.getElementById("music");
+    const mobileHint = document.getElementById('mobile-hint');
+    const isMobile = window.matchMedia('(max-width: 900px)').matches || /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/.test(navigator.userAgent);
+
+    if(isMobile){
+      document.documentElement.classList.add('mobile-layout');
+      if(mobileHint){
+        mobileHint.style.display = 'block';
+        setTimeout(()=>{
+          mobileHint.style.opacity = '0';
+          setTimeout(()=> mobileHint.style.display = 'none', 500);
+        }, 4000);
+      }
+    }
 
     intro.addEventListener("click",()=>{
       intro.style.opacity="0";
@@ -572,6 +767,33 @@
             }, delay);
           }
           scheduleNext();
+        })();
+
+        // Swipe support for mobile horizontal scrolling
+        (function(){
+          const grid = document.querySelector('.grid');
+          if(!grid) return;
+
+          let startX = 0;
+          let scrollLeft = 0;
+          let isDown = false;
+
+          grid.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 1) return;
+            isDown = true;
+            startX = e.touches[0].pageX - grid.offsetLeft;
+            scrollLeft = grid.scrollLeft;
+          }, {passive: true});
+
+          grid.addEventListener('touchmove', (e) => {
+            if (!isDown || e.touches.length !== 1) return;
+            const x = e.touches[0].pageX - grid.offsetLeft;
+            const walk = (startX - x) * 1;
+            grid.scrollLeft = scrollLeft + walk;
+          }, {passive: true});
+
+          grid.addEventListener('touchend', () => { isDown = false; });
+          grid.addEventListener('touchcancel', () => { isDown = false; });
         })();
   </script>
 
